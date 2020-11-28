@@ -3,6 +3,7 @@ class CreateEntries < ActiveRecord::Migration[6.0]
     create_table :entries do |t|
       t.text :content
       t.integer :user_id
+      t.boolean :public, default: false
 
       t.timestamps
     end

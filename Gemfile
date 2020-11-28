@@ -23,6 +23,8 @@ gem 'fast_jsonapi'
 
 gem 'jwt'
 
+gem 'pry'
+
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
 
