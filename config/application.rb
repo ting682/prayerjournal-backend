@@ -33,5 +33,15 @@ module PrayerjournalBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.middleware.use ActionDispatch::Cookies
+
+    # config.action_dispatch.default_headers = {
+    # 'Access-Control-Allow-Origin' => '*',
+    # 'Access-Control-Request-Method' => 'GET, PATCH, PUT, POST, OPTIONS, DELETE',
+    # 'Access-Control-Allow-Headers:' => 'Origin, X-Requested-With, Content-Type, Accept'
+    # }
+
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end

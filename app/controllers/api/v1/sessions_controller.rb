@@ -6,13 +6,17 @@ class Api::V1::SessionsController < ApplicationController
     end
 
     def create
-        #binding.pry
+        # binding.pry
         @user = User.find_by(email_address: params[:user][:email_address])
         if @user && @user.authenticate(params[:user][:password])
-            #session[:user_id] = @user.id
+            # session[:user_id] = @user.id
             
+            # token = encode_token({ user_id: @user.id })
             token = encode_token({ user_id: @user.id })
+            # cookies.signed[:user_id] = @user.id
+            cookies.signed[:jwt] = token
             render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
+            # render json: UserSerializer.new(@user), status: :ok
         else
             render json: {
                 error: "Login error: email and password do not match records.",
@@ -24,6 +28,16 @@ class Api::V1::SessionsController < ApplicationController
     def destroy
 
     end
+
+    def get_current_user
+        if logged_in?
+          render json: UserSerializer.new(current_user)
+        else
+          render json: {
+            error: "No one logged in"
+          }
+        end
+      end
 
     def user_login_params
         # params { user: {username: 'Chandler Bing', password: 'hi' } }

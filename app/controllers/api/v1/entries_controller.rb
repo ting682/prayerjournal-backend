@@ -1,5 +1,5 @@
 class Api::V1::EntriesController < ApplicationController
-    skip_before_action :authorized, only: [:index]
+    # skip_before_action :authorized, only: [:index]
 
     def index
         #user = User.find(params[:user_id])
@@ -24,7 +24,7 @@ class Api::V1::EntriesController < ApplicationController
     end
 
     def create
-        
+        #binding.pry
         entry = Entry.new(entry_params)
         #binding.pry
         if entry.valid?
