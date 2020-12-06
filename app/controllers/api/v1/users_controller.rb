@@ -2,6 +2,12 @@ class Api::V1::UsersController < ApplicationController
 
     skip_before_action :authorized, only: [:create, :show]
 
+    def index
+        @users = User.all
+
+        render json: UserSerializer.new(@users)
+    end
+
     def show
         @user = User.find(params[:id])
         
