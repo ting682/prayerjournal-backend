@@ -40,7 +40,7 @@ class Api::V1::CommentsController < ApplicationController
     def destroy
         #binding.pry
         comment = Comment.find(params[:id])
-        
+        #binding.pry
         if current_user == comment.user && comment.destroy
             render :json => CommentSerializer.new(comment), status: :accepted
         else 
