@@ -27,6 +27,8 @@ class Api::V1::EntriesController < ApplicationController
         #binding.pry
         entry = Entry.new(entry_params)
         #binding.pry
+        #entry.likes.build(user_id: entry_params.user_id)
+        #binding.pry
         if entry.valid?
             entry.save
             render :json => EntrySerializer.new(entry), status: :accepted

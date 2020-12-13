@@ -9,6 +9,15 @@ class Entry < ApplicationRecord
     end
 
     def likes_count
-        return self.likes.size
+
+        count = 0
+
+        self.likes.each do |like|
+            if like.liked
+                count += 1
+            end
+        end
+        
+        return count
     end
 end
