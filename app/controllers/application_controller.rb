@@ -16,7 +16,9 @@ class ApplicationController < ActionController::API
     def auth_header
         #binding.pry
         # http_cookie = request.headers['HTTP_COOKIE'].split("; ")
+
         cookies.signed[:jwt]
+
         # binding.pry
         # { Authorization: 'Bearer <token>' }
         # request.headers['Authorization']
@@ -25,17 +27,17 @@ class ApplicationController < ActionController::API
     # WHY?: `JWT.decode` takes three arguments as well: a JWT as a string, an application secret, and––optionally––a hashing algorithm.
     def decoded_token
         # binding.pry
-    if auth_header
-        # token = auth_header.split(' ')[1]
-        # header: { 'Authorization': 'Bearer <token>' }
-        # The Begin/Rescue syntax allows us to rescue out of an exception in Ruby.
-        begin
-            # binding.pry
-            JWT.decode(auth_header, 'my_s3cr3t', true, algorithm: 'HS256')
-        rescue JWT::DecodeError
-            nil
+        if auth_header
+            # token = auth_header.split(' ')[1]
+            # header: { 'Authorization': 'Bearer <token>' }
+            # The Begin/Rescue syntax allows us to rescue out of an exception in Ruby.
+            begin
+                # binding.pry
+                JWT.decode(auth_header, 'my_s3cr3t', true, algorithm: 'HS256')
+            rescue JWT::DecodeError
+                nil
+            end
         end
-    end
     end
 
     # STEP 2: Authentication helper methods

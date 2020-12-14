@@ -14,7 +14,7 @@ class Api::V1::SessionsController < ApplicationController
             # token = encode_token({ user_id: @user.id })
             token = encode_token({ user_id: @user.id })
             # cookies.signed[:user_id] = @user.id
-            cookies.signed[:jwt] = token
+            cookies.signed[:jwt] = {value: token, httponly: true}
             render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
             # render json: UserSerializer.new(@user), status: :ok
         else
@@ -26,7 +26,8 @@ class Api::V1::SessionsController < ApplicationController
     end
 
     def destroy
-
+      cookies.delete(:jwt)
+      render json: {message: "Logged out successfully"}, status: :accepted
     end
 
     def get_current_user

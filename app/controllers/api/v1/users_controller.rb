@@ -19,8 +19,9 @@ class Api::V1::UsersController < ApplicationController
         @user = User.new(user_params)
     
         if @user.save
-            @token = encode_token(user_id: @user.id)
+            token = encode_token({ user_id: @user.id })
             #binding.pry
+            cookies.signed[:jwt] = token
             render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
         else
 
