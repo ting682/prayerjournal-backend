@@ -14,7 +14,7 @@ class Api::V1::SessionsController < ApplicationController
             # token = encode_token({ user_id: @user.id })
             token = encode_token({ user_id: @user.id })
             # cookies.signed[:user_id] = @user.id
-            cookies.signed[:jwt] = {value: token, , same_site: :none, secure: true, httponly: true}
+            cookies.signed[:jwt] = token
             render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
             # render json: UserSerializer.new(@user), status: :ok
         else

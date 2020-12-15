@@ -22,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
             @user.save
             token = encode_token({ user_id: @user.id })
             #binding.pry
-            cookies.signed[:jwt] = {value: token, , same_site: :none, secure: true, httponly: true}
+            cookies.signed[:jwt] = token
             render json: { user: UserSerializer.new(@user), jwt: token }, status: :created
         else
 
