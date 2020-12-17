@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3001', 'https://prayerjournal.netlify.app'
+    origins 'http://localhost:3001', 'https://prayerjournal.netlify.app', 'https://prayerjournal.place'
     # origins 'https://prayerjournal.netlify.app'
 
     resource '*',
