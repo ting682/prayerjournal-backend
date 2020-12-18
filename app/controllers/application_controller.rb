@@ -1,4 +1,4 @@
-Dotenv.load('file.env')
+# Dotenv.load('file.env')
 
 class ApplicationController < ActionController::API
 
