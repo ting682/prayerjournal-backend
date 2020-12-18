@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
     # WHY?: `JWT.encode` takes up to three arguments: a payload to encode, an application secret of the developer's choice, and an optional third that can be used to specify the hashing algorithm used. Typically, we don't need to show the third. This method returns a JWT as a string.
     def encode_token(payload)
         # should store secret in env variable
-        JWT.encode(payload, Rails.application.credentials[:secret_cookie])
+        JWT.encode(payload, ENV['JWT_SECRET'])
         # binding.pry
     end
 
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
             # The Begin/Rescue syntax allows us to rescue out of an exception in Ruby.
             begin
                 # binding.pry
-                JWT.decode(auth_header, Rails.application.credentials[:secret_cookie], true, algorithm: 'HS256')
+                JWT.decode(auth_header, ENV['JWT_SECRET'], true, algorithm: 'HS256')
             rescue JWT::DecodeError
                 nil
             end
