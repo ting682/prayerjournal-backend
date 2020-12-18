@@ -1,3 +1,5 @@
+Dotenv.load('file.env')
+
 class ApplicationController < ActionController::API
 
     include ::ActionController::Cookies
@@ -10,6 +12,7 @@ class ApplicationController < ActionController::API
     def encode_token(payload)
         # should store secret in env variable
         JWT.encode(payload, ENV['JWT_SECRET'])
+        
         # binding.pry
     end
 
@@ -34,6 +37,7 @@ class ApplicationController < ActionController::API
             begin
                 # binding.pry
                 JWT.decode(auth_header, ENV['JWT_SECRET'], true, algorithm: 'HS256')
+                
             rescue JWT::DecodeError
                 nil
             end
