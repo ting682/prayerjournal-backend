@@ -3,7 +3,11 @@ class Api::V1::EntriesController < ApplicationController
 
     def index
         #user = User.find(params[:user_id])
-        entries = Entry.all.order(updated_at: :desc).where("public = true")
+        if params[:user_id]
+            entries = User.find(params[:user_id]).entries
+        else 
+            entries = Entry.all.order(updated_at: :desc).where("public = true")
+        end
 
         options = {
             include: [:comments, :likes]
