@@ -4,7 +4,8 @@ class Api::V1::EntriesController < ApplicationController
     def index
         #user = User.find(params[:user_id])
         if params[:user_id]
-            if params[:user_id] == current_user
+            # binding.pry
+            if params[:user_id] == current_user.id.to_s
                 entries = User.find(params[:user_id]).entries.order(updated_at: :desc)
             else
                 entries = User.find(params[:user_id]).entries.order(updated_at: :desc).where("public = true")
