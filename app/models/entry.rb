@@ -3,6 +3,7 @@ class Entry < ApplicationRecord
     belongs_to :user
     has_many :likes
     has_many :comments
+    validates :content, presence: true
 
     def name
         return self.user.name
@@ -17,7 +18,7 @@ class Entry < ApplicationRecord
                 count += 1
             end
         end
-        
+
         return count
     end
 end

@@ -3,7 +3,7 @@ class Api::V1::EntriesController < ApplicationController
 
     def index
         #user = User.find(params[:user_id])
-        entries = Entry.all.order(updated_at: :asc)
+        entries = Entry.all.order(updated_at: :desc).where("public = true")
 
         options = {
             include: [:comments, :likes]
@@ -34,7 +34,7 @@ class Api::V1::EntriesController < ApplicationController
             render :json => EntrySerializer.new(entry), status: :accepted
         else
             #error message
-            render :json => {errors: entry.errors.full_messages}, status: :unprocessible_entity
+            render :json => {errors: entry.errors.full_messages.to_sentence}, status: :unprocessable_entity
         end
     end
 
