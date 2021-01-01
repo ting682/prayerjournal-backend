@@ -77,6 +77,6 @@ class Api::V1::EntriesController < ApplicationController
     private
 
     def entry_params
-        params.require(:entry).permit!
+        params.require(:entry).permit(:content, :user_id, :public)
     end
 end
