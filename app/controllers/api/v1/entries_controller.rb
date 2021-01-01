@@ -1,5 +1,5 @@
 class Api::V1::EntriesController < ApplicationController
-    # skip_before_action :authorized, only: [:index]
+    skip_before_action :authorized, only: [:index, :show]
 
     def index
         #user = User.find(params[:user_id])
@@ -22,15 +22,23 @@ class Api::V1::EntriesController < ApplicationController
     end
 
     def show
-        entry = Entry.find(params[:id])
+
+        # binding.pry
+        entry = Entry.find_by_id(params[:id])
+        
         #passages = entry.passages
-        options = {
-            include: [:'comments']
+        if !entry.blank? && entry.public
+            options = {
+            include: [:comments, :likes]
                 # :passages => {:only => [:content, :book, :chapter, :verse]},
                 # :comments => {:only => [:'comments.content', :'comments.user.name']}
-             
-        }
-        render json: EntrySerializer.new(entry, options)
+                
+            }
+            render json: EntrySerializer.new(entry, options)
+        else
+            render :json => {errors: 'Record not found'}, status: :unprocessable_entity
+        end
+        
     end
 
     def create
