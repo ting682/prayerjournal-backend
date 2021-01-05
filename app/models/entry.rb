@@ -3,7 +3,9 @@ class Entry < ApplicationRecord
     belongs_to :user
     has_many :likes
     has_many :comments
+    has_many :hashtags
     validates :content, presence: true
+    belongs_to :blog, optional: true
 
     def name
         return self.user.name
