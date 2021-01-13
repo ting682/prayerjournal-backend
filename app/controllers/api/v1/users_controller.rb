@@ -46,6 +46,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def user_edit_params
-        params.require(:user).permit(:name, :bio, :email_address, :image_url)
+        params.require(:user).permit(:name, :bio, :email_address, :profile_url)
     end
 end
