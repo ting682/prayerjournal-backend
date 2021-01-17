@@ -3,6 +3,7 @@ class Api::V1::BlogsController < ApplicationController
     skip_before_action :authorized, only: [:index, :show]
 
     def index
+        # binding.pry
         #user = User.find(params[:user_id])
         if params[:user_id]
             # binding.pry
@@ -13,11 +14,11 @@ class Api::V1::BlogsController < ApplicationController
             end
             
         else 
-            blogs = blog.all.order(updated_at: :desc).where("public = true")
+            blogs = Blog.all.order(updated_at: :desc)
         end
 
         options = {
-            include: [:comments, :likes, :entries]
+            include: [:entries]
         }
         render :json => BlogSerializer.new(blogs, options)
     end
@@ -28,7 +29,7 @@ class Api::V1::BlogsController < ApplicationController
         blog = Blog.find_by_id(params[:id])
         
         #passages = blog.passages
-        if !blog.blank? && blog.public && blog.published
+        if !blog.blank? && blog.published
             options = {
             include: [:entries]
                 # :passages => {:only => [:content, :book, :chapter, :verse]},
@@ -66,9 +67,9 @@ class Api::V1::BlogsController < ApplicationController
     end
 
     def update
-        
+       
         blog = Blog.find(params[:id])
-        #binding.pry
+        # binding.pry
         if blog.user == current_user && blog.update(blog_params)
             #binding.pry
             render :json => BlogSerializer.new(blog), status: :accepted
