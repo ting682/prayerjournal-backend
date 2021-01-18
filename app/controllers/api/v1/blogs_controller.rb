@@ -5,16 +5,19 @@ class Api::V1::BlogsController < ApplicationController
     def index
         # binding.pry
         #user = User.find(params[:user_id])
-        if params[:user_id]
-            # binding.pry
-            if params[:user_id] == current_user.id.to_s
-                blogs = User.find(params[:user_id]).blogs.order(updated_at: :desc)
-            else
-                blogs = User.find(params[:user_id]).blogs.order(updated_at: :desc).where("public = true")
-            end
+        # if params[:user_id]
+        #     # binding.pry
+        #     if params[:user_id] == current_user.id.to_s
+        #         blogs = User.find(params[:user_id]).blogs.order(updated_at: :desc)
+        #     else
+        #         blogs = User.find(params[:user_id]).blogs.order(updated_at: :desc).where("public = true")
+        #     end
             
-        else 
-            blogs = Blog.all.order(updated_at: :desc).where("published = true").or(Blog.all.order(updated_at: :desc).where(user_id: current_user.id))
+        # else 
+        if current_user
+            blogs = Blog.all.order(updated_at: :desc).where(user_id: current_user.id)
+        else
+            blogs = Blog.all.order(updated_at: :desc).where("published = true")
         end
 
         options = {
