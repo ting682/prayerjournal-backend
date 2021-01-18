@@ -6,13 +6,13 @@ class Api::V1::EntriesController < ApplicationController
         if params[:user_id]
             # binding.pry
             if params[:user_id] == current_user.id.to_s
-                entries = User.find(params[:user_id]).entries.order(updated_at: :desc)
+                entries = User.find(params[:user_id]).entries.order(updated_at: :desc).where("blog_id IS NULL")
             else
                 entries = User.find(params[:user_id]).entries.order(updated_at: :desc).where("public = true")
             end
             
         else 
-            entries = Entry.all.order(updated_at: :desc).where("public = true")
+            entries = Entry.all.order(updated_at: :desc).where(public: true).where("blog_id IS NULL")
         end
 
         options = {

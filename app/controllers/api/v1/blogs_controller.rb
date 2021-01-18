@@ -14,7 +14,7 @@ class Api::V1::BlogsController < ApplicationController
             end
             
         else 
-            blogs = Blog.all.order(updated_at: :desc)
+            blogs = Blog.all.order(updated_at: :desc).where("published = true").or(Blog.all.order(updated_at: :desc).where(user_id: current_user.id))
         end
 
         options = {
@@ -53,7 +53,7 @@ class Api::V1::BlogsController < ApplicationController
 
     def create
         #binding.pry
-        blog = blog.new(blog_params)
+        blog = Blog.new(blog_params)
         #binding.pry
         #blog.likes.build(user_id: blog_params.user_id)
         #binding.pry
