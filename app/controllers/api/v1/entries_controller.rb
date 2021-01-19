@@ -16,7 +16,7 @@ class Api::V1::EntriesController < ApplicationController
         end
 
         options = {
-            include: [:comments, :likes]
+            include: [:comments, :likes, :prayers]
         }
         render :json => EntrySerializer.new(entries, options)
     end
@@ -29,7 +29,7 @@ class Api::V1::EntriesController < ApplicationController
         #passages = entry.passages
         if !entry.blank? && entry.public
             options = {
-            include: [:comments, :likes]
+            include: [:comments, :likes, :prayers]
                 # :passages => {:only => [:content, :book, :chapter, :verse]},
                 # :comments => {:only => [:'comments.content', :'comments.user.name']}
                 

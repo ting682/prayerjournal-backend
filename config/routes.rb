@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  
   resources :hashtags
   namespace :api do
     namespace :v1 do
@@ -18,6 +17,7 @@ Rails.application.routes.draw do
         resources :comments
         resources :likes
         resources :hashtags
+        resources :prayers
       end
 
       get '/signup', to: "users#new"
