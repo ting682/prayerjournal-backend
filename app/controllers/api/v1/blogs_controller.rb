@@ -15,7 +15,7 @@ class Api::V1::BlogsController < ApplicationController
             
         # else 
         if current_user
-            blogs = Blog.all.order(updated_at: :desc).where(user_id: current_user.id)
+            blogs = Blog.all.order(updated_at: :desc).where(user_id: current_user.id).or(Blog.all.order(updated_at: :desc).where("published = true"))
         else
             blogs = Blog.all.order(updated_at: :desc).where("published = true")
         end
